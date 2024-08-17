@@ -2,7 +2,7 @@ package com.paulchibamba.to_docompose.di
 
 import android.content.Context
 import androidx.room.Room
-import com.paulchibamba.to_docompose.data.ToDoDatabase
+import com.paulchibamba.to_docompose.data.TaskDatabase
 import com.paulchibamba.to_docompose.util.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -17,9 +17,9 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(context, ToDoDatabase::class.java, DATABASE_NAME).build()
+    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(context, TaskDatabase::class.java, DATABASE_NAME).build()
 
     @Singleton
     @Provides
-    fun provideDao(database: ToDoDatabase) = database.toDoDao()
+    fun provideDao(database: TaskDatabase) = database.toDoDao()
 }
