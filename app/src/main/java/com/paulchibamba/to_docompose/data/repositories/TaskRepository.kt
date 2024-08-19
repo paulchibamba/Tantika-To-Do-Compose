@@ -2,11 +2,11 @@ package com.paulchibamba.to_docompose.data.repositories
 
 import com.paulchibamba.to_docompose.data.TaskDao
 import com.paulchibamba.to_docompose.data.models.Task
-import dagger.hilt.android.scopes.ViewScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@ViewScoped
+@ViewModelScoped
 class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     val getAllTasks: Flow<List<Task>> = taskDao.getAllTasks()
