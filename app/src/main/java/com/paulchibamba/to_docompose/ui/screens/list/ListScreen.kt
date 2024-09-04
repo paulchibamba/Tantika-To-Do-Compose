@@ -8,20 +8,33 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.paulchibamba.to_docompose.R
+import com.paulchibamba.to_docompose.ui.viewmodels.SharedViewmodel
+import com.paulchibamba.to_docompose.util.SearchAppBarState
 
 @Composable
 fun ListScreen(
-    navigateToTaskScreen: (Int) -> Unit
+    navigateToTaskScreen: (Int) -> Unit,
+    sharedViewmodel: SharedViewmodel
 ){
+
+    val searchAppBarState: SearchAppBarState by sharedViewmodel.searchAppBarState
+
+    val searchTextState: String by sharedViewmodel.searchTextState
+
     Scaffold(
         topBar = {
-            ListAppBar()
+            ListAppBar(
+                sharedViewmodel = sharedViewmodel,
+                searchAppBarState = searchAppBarState,
+                searchTextState = searchTextState
+            )
         },
         content = {},
         floatingActionButton = {
@@ -43,19 +56,4 @@ fun ListFab(
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
-}
-
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-    device = Devices.NEXUS_5,
-    showBackground = true,
-    name = "Light Mode"
-)
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    device = Devices.NEXUS_5,
-)
-@Composable
-fun ListScreenPreview(){
-    ListScreen(navigateToTaskScreen = {})
 }
