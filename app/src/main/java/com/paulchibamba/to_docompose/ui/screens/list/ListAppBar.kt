@@ -5,9 +5,13 @@ import android.content.res.Configuration
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -45,6 +49,7 @@ import com.paulchibamba.to_docompose.R
 import com.paulchibamba.to_docompose.components.PriorityItem
 import com.paulchibamba.to_docompose.data.models.Priority
 import com.paulchibamba.to_docompose.ui.theme.MEDIUM_PADDING
+import com.paulchibamba.to_docompose.ui.theme.SEARCH_APP_BAR_HEIGHT
 import com.paulchibamba.to_docompose.ui.theme.TOP_APP_BAR_HEIGHT
 import com.paulchibamba.to_docompose.ui.viewmodels.SharedViewmodel
 import com.paulchibamba.to_docompose.util.SearchAppBarState
@@ -81,14 +86,12 @@ fun ListAppBar(
             )
         }
     }
-
-
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun  DefaultListAppBar(
+fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
     onDeleteAllClicked: () -> Unit
@@ -128,8 +131,9 @@ fun SearchAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(TOP_APP_BAR_HEIGHT),
-        shadowElevation = 4.dp,
+            .height(SEARCH_APP_BAR_HEIGHT)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(top = 40.dp),
         color = MaterialTheme.colorScheme.primaryContainer
     ) {
         TextField(
@@ -164,7 +168,7 @@ fun SearchAppBar(
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = stringResource(R.string.search_icon),
-                        tint = MaterialTheme.colorScheme.inversePrimary
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
 
                 }
@@ -172,14 +176,15 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        when(trailingIconState){
+                        when (trailingIconState) {
                             TrailingIconState.READY_TO_DELETE -> {
                                 onTextChange("")
                                 trailingIconState = TrailingIconState.READY_TO_CLOSE
 
                             }
+
                             TrailingIconState.READY_TO_CLOSE -> {
-                                if (text.isNotEmpty()){
+                                if (text.isNotEmpty()) {
                                     onTextChange("")
                                 } else {
                                     onCloseClicked()
@@ -207,7 +212,6 @@ fun SearchAppBar(
             )
         )
     }
-
 }
 
 @Composable
